@@ -1,20 +1,21 @@
 name: Eleventy Build
 on: [push]
-
 jobs:
   build_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Setup Node
+      - name: Setup Node.js 18
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - name: Build
-        uses: TartanLlama/actions-eleventy@master
+      - name: Install Dependencies
+        run: npm ci # Or npm install if you prefer
+      - name: Build Eleventy
+        run: npx @11ty/eleventy # Or yarn eleventy, if you use Yarn
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: _site 
+          publish_dir: _site
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
