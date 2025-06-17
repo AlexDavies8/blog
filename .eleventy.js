@@ -7,16 +7,7 @@ export default async function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy({ "public" : "/"});
 
     eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
-        formats: ["avif", "webp", "jpeg"],
-        widths: ["auto"],
-        htmlOptions: {
-            imgAttributes: {
-                loading: "lazy",
-                decoding: "async",
-            },
-            pictureAttributes: {}
-        },
-        svgShortCircuit: true
+        formats: ["avif", "webp", "jpeg"]
     });
     eleventyConfig.addPlugin(HtmlBasePlugin);
     eleventyConfig.addPlugin(syntaxHighlight);
