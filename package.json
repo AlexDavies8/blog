@@ -8,8 +8,5 @@
     "@11ty/eleventy-img": "^6.0.4",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.1",
     "eleventy-plugin-mathjax": "^2.0.4"
-  },
-  "scripts": {
-    "build-ghpages": "npx @11ty/eleventy --pathprefix=/blog/"
   }
 }
