@@ -25,7 +25,6 @@ export default async function(eleventyConfig) {
     eleventyConfig.setInputDirectory("./content");
     eleventyConfig.setIncludesDirectory("../_includes");
     eleventyConfig.setDataDirectory("../_data");
-    eleventyConfig.setOutputDirectory("docs")
 
     eleventyConfig.setTemplateFormats(["md", "njk", "html", "liquid", "11ty.js"]);
 
