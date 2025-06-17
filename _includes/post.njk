@@ -1,0 +1,14 @@
+---
+layout: base.njk
+templateClass: tmpl-post
+---
+<article class="article">
+  <header class="article-header">
+    <h1>{{ title | safe }}</h1>
+    <div class="article-header-meta">
+      <time class="posts-list-date">{{ page.date | formatDate }}</time>
+    </div>
+  </header>
+
+  {{ content | safe }}
+</article>
