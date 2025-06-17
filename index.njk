@@ -1,0 +1,27 @@
+---
+layout: layouts/home.njk
+title: This is home
+---
+{% set maxPosts = collections.posts.length | min(1) %}
+
+{% set postslist = collections.posts | latestExcept(3) %}
+{% set firstPost = collections.posts | head(-1) %}
+
+<article class="article">
+<h1 class="article-title">{{ firstPost[0].data.title | safe }}</h1>
+{{ firstPost[0].templateContent | safe }}
+</article>
+
+<hr />
+
+<div class="posts-list">
+  {% set postslistCounter = collections.posts | length %}
+  
+  {% if postslistCounter > 1 %}
+    <h2>More posts</h2>
+    {% include "postslist.njk" %}
+      {% if postslistCounter > 3 %}
+        <a class="btn-more" href="{{ '/posts/' | url }}">More posts &rarr;</a>
+      {% endif %}
+  {% endif %}
+</div>
