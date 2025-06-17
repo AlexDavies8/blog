@@ -1,0 +1,616 @@
+
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Illusion of Research</title>
+    <meta name="description" content="">
+
+    <link rel="stylesheet" href="/index.css">
+    <link rel="alternate" href="." type="application/atom+xml" title="">
+    <link rel="alternate" href="." type="application/json" title="">
+  <style id="MJX-SVG-styles">
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+</style></head>
+  <body>
+    <main class="tmpl-post">
+      <div class="profile">
+    <div class="profile-section">
+        <a href="/">
+            <picture><source type="image/avif" srcset="/img/0BFt-qpFPV-2048.avif 2048w"><source type="image/webp" srcset="/img/0BFt-qpFPV-2048.webp 2048w"><img loading="lazy" decoding="async" src="/img/0BFt-qpFPV-2048.jpeg" class="avatar-img" alt="Logo" width="2048" height="2048"></picture>
+        
+            <h1 class="avatar-name">Alex's Blog</h1>
+            <p class="avatar-sub">code and stuff</p>
+        </a>
+    </div>
+</div>
+
+      <div class="wrapper">
+        <article class="article">
+  <header class="article-header">
+    <h1>The Illusion of Research</h1>
+    <div class="article-header-meta">
+      <time class="posts-list-date">16 Jun 2025</time>
+    </div>
+  </header>
+
+  <p>Apple researchers recently released a rather bold paper called <a href="https://ml-site.cdn-apple.com/papers/the-illusion-of-thinking.pdf">The Illusion of Thinking</a>, which was picked up by both media outlets and social media alike as some kind of proof that AI is a fad, or that they are incapable of reasoning, or one of many other claims.</p>
+<iframe style="width:100%;aspect-ratio:16/9" src="https://www.youtube.com/embed/VBP3FojvpJw?si=dYmd0Oi7TmFGxcvm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+<p>However, this isn't just a case of people reading the title and making up some fantastical story - the paper really does make some absurd and quite frankly unfounded claims, although they aren't quite the claims reported in most online coverage.</p>
+<h1>So what are they <em>really</em> claiming?</h1>
+<p>The current frontier of AI models are all something known as Large Reasoning Models (LRMs). These are regular Large Language Models (LLMs) that have been trained specifically to write out their line of reasoning, often referred to as a "chain of thought", before giving an answer. This approach gives significantly better accuracy on difficult or large tasks requiring reasoning.</p>
+<p>This paper makes the case that LRMs have the same fundamental limitations as LLMs, and are not capable of generalised reasoning. They also make various smaller implications throughout the paper, including that LRMs aren't actually doing reasoning, they are just pattern matching to data they've seen while training.</p>
+<p>Yet, despite these very bold claims - after all, this is going against essentially all prior precedence - the paper is riddled with poor assumptions, a lack of consideration for obvious potential issues, and at the end of it all even their own results seem to contradict their conclusions.</p>
+<h1>An Error in Assumption</h1>
+<p>To evaluation the reasoning capabilities of LRMs vs LLMs, the paper tests the models on a variety of logic puzzles. I'd encourage you to read the paper itself, as despite its issues, it is written fairly well, and is not particularly technical or difficult to read. That said, I'll still provide a quick overview of one of the problems - Towers of Hanoi.</p>
+<p>Towers of Hanoi is a classic logic puzzle, often used in machine learning, that involves moving a stack of rings starting on the left pole all onto the right pole. However, you can only move one ring at a time, and you're not allowed to stack a larger ring on top of a smaller one. The goal is to find the shortest sequence of moves to carry out this task. You can try it out below!</p>
+<div class="towers-of-hanoi-container">
+    <div class="container">
+        <h1>Towers of Hanoi</h1>
+<p></p><div class="controls">
+<div class="slider-container">
+<label for="ringCount">Rings:</label>
+<input type="range" id="ringCount" min="3" max="8" value="3">
+<span id="ringCountDisplay">3</span>
+</div>
+<button id="resetBtn">Reset Game</button>
+</div><p></p>
+<p></p><div class="stats">
+<div>Moves: <span id="moveCount">0</span></div>
+<div>Optimal: <span id="optimalMoves">7</span></div>
+</div><p></p>
+<p></p><div id="victoryMessage" class="victory" style="display: none;">
+🎉 Congratulations! You solved it! 🎉
+</div><p></p>
+<p></p><div class="game-area">
+<div class="tower" data-tower="0"></div>
+<div class="tower" data-tower="1"></div>
+<div class="tower" data-tower="2"></div>
+</div>
+</div><p></p>
+</div>
+<style>
+    .towers-of-hanoi-container {
+        margin: 2rem 0;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .towers-of-hanoi-container .container {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        max-width: 800px;
+        width: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .towers-of-hanoi-container h1 {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+    }
+
+    .towers-of-hanoi-container .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .towers-of-hanoi-container .control-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .towers-of-hanoi-container .slider-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .towers-of-hanoi-container input[type="range"] {
+        width: 100px;
+    }
+
+    .towers-of-hanoi-container button {
+        background: rgba(255,255,255,0.2);
+        color: white;
+        border: 2px solid rgba(255,255,255,0.3);
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s;
+    }
+
+    .towers-of-hanoi-container button:hover {
+        background: rgba(255,255,255,0.3);
+        border-color: rgba(255,255,255,0.5);
+    }
+
+    .towers-of-hanoi-container .stats {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .towers-of-hanoi-container .game-area {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        height: 300px;
+        margin: 20px 0;
+        position: relative;
+    }
+
+    .towers-of-hanoi-container .tower {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        width: 200px;
+        height: 100%;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .towers-of-hanoi-container .tower::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 10px;
+        height: 250px;
+        background: #8B4513;
+        border-radius: 5px;
+    }
+
+    .towers-of-hanoi-container .tower::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 180px;
+        height: 15px;
+        background: #654321;
+        border-radius: 7px;
+        z-index: 1;
+    }
+
+    .towers-of-hanoi-container .ring {
+        height: 25px;
+        border-radius: 12px;
+        margin: 2px 0;
+        cursor: grab;
+        position: relative;
+        z-index: 10;
+        border: 2px solid rgba(0,0,0,0.2);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .towers-of-hanoi-container .ring:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+
+    .towers-of-hanoi-container .ring.dragging {
+        cursor: grabbing;
+        transform: scale(1.05);
+        z-index: 1000;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+
+    .towers-of-hanoi-container .tower.highlight {
+        /* background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px; */
+    }
+
+    .towers-of-hanoi-container .victory {
+        text-align: center;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        margin: 20px 0;
+        animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
+    }
+</style>
+<script>
+    (function() {
+        // Wrap in IIFE to avoid global conflicts
+        class TowersOfHanoi {
+            constructor() {
+                this.rings = 3;
+                this.moves = 0;
+                this.towers = [[], [], []];
+                this.draggedRing = null;
+                this.draggedFrom = null;
+                
+                this.initializeElements();
+                this.setupEventListeners();
+                this.resetGame();
+            }
+
+            initializeElements() {
+                const container = document.querySelector('.towers-of-hanoi-container');
+                this.ringCountSlider = container.querySelector('#ringCount');
+                this.ringCountDisplay = container.querySelector('#ringCountDisplay');
+                this.resetBtn = container.querySelector('#resetBtn');
+                this.moveCountDisplay = container.querySelector('#moveCount');
+                this.optimalMovesDisplay = container.querySelector('#optimalMoves');
+                this.victoryMessage = container.querySelector('#victoryMessage');
+                this.towerElements = container.querySelectorAll('.tower');
+            }
+
+            setupEventListeners() {
+                this.ringCountSlider.addEventListener('input', (e) => {
+                    this.rings = parseInt(e.target.value);
+                    this.ringCountDisplay.textContent = this.rings;
+                    this.resetGame();
+                });
+
+                this.resetBtn.addEventListener('click', () => this.resetGame());
+
+                document.addEventListener('mousedown', (e) => this.handleStart(e));
+                document.addEventListener('mousemove', (e) => this.handleMove(e));
+                document.addEventListener('mouseup', (e) => this.handleEnd(e));
+                
+                document.addEventListener('touchstart', (e) => this.handleStart(e));
+                document.addEventListener('touchmove', (e) => this.handleMove(e));
+                document.addEventListener('touchend', (e) => this.handleEnd(e));
+            }
+
+            resetGame() {
+                this.moves = 0;
+                this.towers = [[], [], []];
+                this.victoryMessage.style.display = 'none';
+                
+                for (let i = this.rings; i >= 1; i--) {
+                    this.towers[0].push(i);
+                }
+                
+                this.updateDisplay();
+                this.updateOptimalMoves();
+            }
+
+            updateOptimalMoves() {
+                const optimal = Math.pow(2, this.rings) - 1;
+                this.optimalMovesDisplay.textContent = optimal;
+            }
+
+            updateDisplay() {
+                this.moveCountDisplay.textContent = this.moves;
+                
+                this.towerElements.forEach(tower => {
+                    const rings = tower.querySelectorAll('.ring');
+                    rings.forEach(ring => ring.remove());
+                });
+
+                this.towers.forEach((tower, towerIndex) => {
+                    const towerElement = this.towerElements[towerIndex];
+                    tower.forEach(ringSize => {
+                        const ring = this.createRingElement(ringSize);
+                        towerElement.appendChild(ring);
+                    });
+                });
+
+                this.checkVictory();
+            }
+
+            createRingElement(size) {
+                const ring = document.createElement('div');
+                ring.className = 'ring';
+                ring.dataset.size = size;
+                
+                const width = 60 + (size * 20);
+                const hue = (size * 40) % 360;
+                
+                ring.style.width = width + 'px';
+                ring.style.backgroundColor = `hsl(${hue}, 70%, 60%)`;
+                
+                return ring;
+            }
+
+            handleStart(e) {
+                const target = e.target.closest('.ring');
+                if (!target || !target.closest('.towers-of-hanoi-container')) return;
+
+                e.preventDefault();
+                const tower = target.parentElement;
+                const towerIndex = parseInt(tower.dataset.tower);
+                const rings = Array.from(tower.querySelectorAll('.ring'));
+                const topRing = rings[rings.length - 1];
+
+                if (target !== topRing) return;
+
+                this.draggedRing = target;
+                this.draggedFrom = towerIndex;
+                target.classList.add('dragging');
+                
+                const rect = target.getBoundingClientRect();
+                this.dragOffset = {
+                    x: (e.clientX || e.touches[0].clientX) - rect.left,
+                    y: (e.clientY || e.touches[0].clientY) - rect.top
+                };
+            }
+
+            handleMove(e) {
+                if (!this.draggedRing) return;
+                e.preventDefault();
+
+                const clientX = e.clientX || e.touches[0].clientX;
+                const clientY = e.clientY || e.touches[0].clientY;
+
+                this.draggedRing.style.position = 'fixed';
+                this.draggedRing.style.left = (clientX - this.dragOffset.x) + 'px';
+                this.draggedRing.style.top = (clientY - this.dragOffset.y) + 'px';
+                this.draggedRing.style.pointerEvents = 'none';
+
+                this.towerElements.forEach(tower => {
+                    tower.classList.remove('highlight');
+                    const rect = tower.getBoundingClientRect();
+                    if (clientX >= rect.left && clientX <= rect.right &&
+                        clientY >= rect.top && clientY <= rect.bottom) {
+                        const towerIndex = parseInt(tower.dataset.tower);
+                        if (this.canPlaceRing(towerIndex, parseInt(this.draggedRing.dataset.size))) {
+                            tower.classList.add('highlight');
+                        }
+                    }
+                });
+            }
+
+            handleEnd(e) {
+                if (!this.draggedRing) return;
+
+                const clientX = e.clientX || e.changedTouches[0].clientX;
+                const clientY = e.clientY || e.changedTouches[0].clientY;
+
+                let targetTower = null;
+                this.towerElements.forEach(tower => {
+                    const rect = tower.getBoundingClientRect();
+                    if (clientX >= rect.left && clientX <= rect.right &&
+                        clientY >= rect.top && clientY <= rect.bottom) {
+                        targetTower = parseInt(tower.dataset.tower);
+                    }
+                    tower.classList.remove('highlight');
+                });
+
+                this.draggedRing.classList.remove('dragging');
+                this.draggedRing.style.position = '';
+                this.draggedRing.style.left = '';
+                this.draggedRing.style.top = '';
+                this.draggedRing.style.pointerEvents = '';
+
+                if (targetTower !== null && targetTower !== this.draggedFrom) {
+                    const ringSize = parseInt(this.draggedRing.dataset.size);
+                    if (this.canPlaceRing(targetTower, ringSize)) {
+                        this.moveRing(this.draggedFrom, targetTower);
+                    }
+                }
+
+                this.draggedRing = null;
+                this.draggedFrom = null;
+                this.updateDisplay();
+            }
+
+            canPlaceRing(towerIndex, ringSize) {
+                const tower = this.towers[towerIndex];
+                return tower.length === 0 || tower[tower.length - 1] > ringSize;
+            }
+
+            moveRing(fromTower, toTower) {
+                const ring = this.towers[fromTower].pop();
+                this.towers[toTower].push(ring);
+                this.moves++;
+            }
+
+            checkVictory() {
+                if (this.towers[2].length === this.rings) {
+                    this.victoryMessage.style.display = 'block';
+                }
+            }
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => new TowersOfHanoi());
+        } else {
+            new TowersOfHanoi();
+        }
+    })();
+</script>
+<p>To an onlooker, this seems like a decent enough test of reasoning. However, there is actually a very simple, well-known algorithm that allows you to solve Towers of Hanoi for any number of rings in an optimal way. It's not the most intuitive, but if you want to, you can follow it step by step without even considering the actual puzzle.</p>
+<p>I would argue that being able to follow a straightforward set of instructions step by step isn't really indicative of reasoning. Solving Towers of Hanoi with a larger number of disks is more work, and arguably 'harder', as it requires more steps, but it's not really demonstrating that it's better at reasoning.</p>
+<p>If I asked you to add two long numbers, you could probably do it fine - there is a pretty simple process for adding numbers together via column addition. I could also say that adding two 50-digit numbers together is harder than just 195 + 327. There's certainly more chance of making a mistake. But would we really say that being able to add long numbers together this way indicates that you are better at reasoning, or are you just better at reliably carrying out a long set of simple steps.</p>
+<picture><source type="image/avif" srcset="/posts/illusion-of-research/LWfss7FwC5-348.avif 348w"><source type="image/webp" srcset="/posts/illusion-of-research/LWfss7FwC5-348.webp 348w"><img loading="lazy" decoding="async" src="/posts/illusion-of-research/LWfss7FwC5-348.jpeg" alt="Comparison of adding two short vs two long numbers" width="348" height="298"></picture>
+<p>The paper makes the observation that when told explicitly to use this algorithm, the models don't do any better. But then very strangely, they make the absurd claim that this shows that they are just repeating answers they've seen during training. But there is another, far more obvious explanation - the models were already using that algorithm. After all, this algorithm is well known, and if you ask literally any AI model to solve Towers of Hanoi it will spit out the algorithm without fail, and then step through it to get the answer. Obviously, telling it to use the algorithm makes no difference - it was using it anyway!</p>
+<h1>Think About it for a Second</h1>
+<p>Another one of the problems they evaluate the LLMs and LRMs on is Blocks World problems. This is quite similar to Tower of Hanoi, and involves a collection of blocks on a table, and a claw arm that can pick them up to move them around. The claw arm can be given instructions to pick up or put down a block, either from the table or onto/from the top of another block. The goal is to go from a starting arrangement of blocks to some given target arrangement in the shortest number of moves. An example of some moves can be seen below.</p>
+<picture><source type="image/avif" srcset="/posts/illusion-of-research/-0g0HEOY6U-1400.avif 1400w"><source type="image/webp" srcset="/posts/illusion-of-research/-0g0HEOY6U-1400.webp 1400w"><img loading="lazy" decoding="async" src="/posts/illusion-of-research/-0g0HEOY6U-1400.jpeg" alt="Blocks world example" width="1400" height="683"></picture>
+<p>For only a handful of blocks - say 2 or 3 - it's quite easy to just sort of 'intuit' the solution. I would argue that while it displays some amount of reasoning, this doesn't generalise to even around 4 or 5 blocks. At that point, you need to start reasoning about the problem in a more structured way - considering sequences of moves more carefully, and likely writing some stuff down and keeping track of things.</p>
+<p>Here is how the models performed - Claude 3.7 Sonnet is an LLM, and the (+thinking) model is the LRM version of the same model. The accuracy measures the percentage of the time that the model got the correct sequence of moves (correct runs divided by total runs).</p>
+<picture><source type="image/avif" srcset="/posts/illusion-of-research/WVfCpUDVHM-779.avif 779w"><source type="image/webp" srcset="/posts/illusion-of-research/WVfCpUDVHM-779.webp 779w"><img loading="lazy" decoding="async" src="/posts/illusion-of-research/WVfCpUDVHM-779.jpeg" alt="Blocks world accuraccy graph" width="779" height="622"></picture>
+<p>And perhaps unsurprisingly, although it's not massively reliable, the LRM (thinking model) is able to solve the problem for up to 10 blocks in about 1 of every 4 tries, but the LLM is essentially incapable of solving it with more than 5 blocks, and is still not very good even for just 4 blocks.</p>
+<p>The LRM is even able to very occasionally get it correct for problems involving 20 blocks! That just isn't going to happen through chance - there is clearly something different in the way the LRM is considering the problem.</p>
+<p>It's also useful to consider that Blocks World puzzles don't have a known guaranteed good solution - for Towers of Hanoi, you will always get the optimal sequence of moves with the algorithm, but with Blocks World you really can't do much better than just looking at every possible sequence of moves (you can optimise this slightly, but it's an NP-hard problem in the general case).</p>
+<p>As the number of blocks increases, the number of possible sequences of moves explodes exponentially. The more moves there are, and the more sequences you need to consider, the more likely it is that a small mistake will slip in and mess up the solution. Yet the authors of this paper claim that because the LRMs eventually fail to find the right answer if you increase the blocks enough, it shows that they have the same fundamental limitations as LLMs.</p>
+<p>The paper also doesn't consider the amount of work it takes to find a solution for each problem - only the solution's length. As an example of the difference - imagine for some kind of game you have at any given point 2 moves you can make, and there's some optimal solution you need to find. We'll also assume that the best way you can solve this game is to just try every possible sequence of moves and record the shortest sequence that gets to the goal. If the solution requires 5 moves, we need to consider <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="2.119ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 936.6 833.9" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><use data-c="32" xlink:href="#MJX-TEX-N-32"></use></g><g data-mml-node="mn" transform="translate(533,363) scale(0.707)"><use data-c="35" xlink:href="#MJX-TEX-N-35"></use></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>2</mn><mn>5</mn></msup></math></mjx-assistive-mml></mjx-container> sequences of moves, which is 32. Now imagine that instead of a choice of 2 moves, you have a choice of 10. This means there are now <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="3.25ex" height="2.005ex" role="img" focusable="false" viewBox="0 -864 1436.6 886" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-TEX-N-31"></use><use data-c="30" xlink:href="#MJX-TEX-N-30" transform="translate(500,0)"></use></g><g data-mml-node="mn" transform="translate(1033,393.1) scale(0.707)"><use data-c="35" xlink:href="#MJX-TEX-N-35"></use></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>10</mn><mn>5</mn></msup></math></mjx-assistive-mml></mjx-container> possible sequences - that's 100,000!</p>
+<p>The authors state in their conclusion that it's "surprising" that some problems requiring fewer moves for a solution seem harder for the AI models, but if you consider the number of possible solutions they need to consider, this "surprise" disappears.</p>
+<p>A more thorough consideration of this can be seen <a href="https://x.com/scaling01/status/1931854370716426246">here</a>.</p>
+<h1>Token Limits and Refusals</h1>
+<p>Another interesting observation in the paper that they draw strange conclusions from is that when a problem gets long enough, the LRMs begin to spend less time thinking than before. I'd like to highlight this (slightly messy) graph from the appendix of the paper as an example. LLMs and LRMs don't see characters or words, but instead "tokens", which may be just sections of a word or possibly multiple words, but these can be thought of as a reasonable measure for the length of the text that it produces when 'thinking'. The blue line gives the average number of tokens, the green circles represent that the run was correct, and the crosses represent failed runs.</p>
+<picture><source type="image/avif" srcset="/posts/illusion-of-research/QqX6rb84v5-581.avif 581w"><source type="image/webp" srcset="/posts/illusion-of-research/QqX6rb84v5-581.webp 581w"><img loading="lazy" decoding="async" src="/posts/illusion-of-research/QqX6rb84v5-581.jpeg" alt="Graph of thinking tokens vs complexity" width="581" height="450"></picture>
+<p>As the number of disks for Tower of Hanoi increases, the number of tokens also increases, up until 8 disks, where it falls off a cliff and gets everything wrong. In fact, the shape of the graph looks suspiciously similar to the graph of how many steps are required to calculate a solution for Towers of Hanoi ( <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.186ex;" xmlns="http://www.w3.org/2000/svg" width="6.176ex" height="1.714ex" role="img" focusable="false" viewBox="0 -675.5 2729.7 757.5" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><use data-c="32" xlink:href="#MJX-TEX-N-32"></use></g><g data-mml-node="mi" transform="translate(533,363) scale(0.707)"><use data-c="1D45B" xlink:href="#MJX-TEX-I-1D45B"></use></g></g><g data-mml-node="mo" transform="translate(1229.5,0)"><use data-c="2212" xlink:href="#MJX-TEX-N-2212"></use></g><g data-mml-node="mn" transform="translate(2229.7,0)"><use data-c="31" xlink:href="#MJX-TEX-N-31"></use></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>2</mn><mi>n</mi></msup><mo>−</mo><mn>1</mn></math></mjx-assistive-mml></mjx-container> ).</p>
+<picture><source type="image/avif" srcset="/posts/illusion-of-research/VKa0w2Tj_V-885.avif 885w"><source type="image/webp" srcset="/posts/illusion-of-research/VKa0w2Tj_V-885.webp 885w"><img loading="lazy" decoding="async" src="/posts/illusion-of-research/VKa0w2Tj_V-885.jpeg" alt="2^n-1 overlaid on the previous graph" width="885" height="697"></picture>
+<p>So why does it suddenly stop? Well, there are a couple of issues here. I discovered <a href="https://www.seangoedecke.com/illusion-of-thinking/">an article online</a> where the author decided to just try asking one of the models to solve Towers of Hanoi with 10 disks. Well, it turns out that the reason it does less thinking is because it stops running the algorithm! It decides that it's just too long to write out by hand, and looks for some alternative approach (iterative, rather than recursive).
+![[Pasted image 20250615185341.png]]
+After testing this myself on multiple models, while the point at which they decide to give up on doing it manually does vary, there is always a point at which they say it's either "impractical", "difficult", or just straight up "impossible" to do it all manually.</p>
+<h1>It turns out, they're right!</h1>
+<p>In the Apple paper, they state that they placed a 64k token limit on the number of tokens in the answer (this includes non-thinking tokens too, so thinking tokens should be slightly less than this too).</p>
+<p>I decided to do a few more calculations, as many of these logic problems scale exponentially - the amount of work required to solve them very rapidly increases. For Tower of Hanoi, as mentioned before, the number of moves required is <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.186ex;" xmlns="http://www.w3.org/2000/svg" width="6.176ex" height="1.714ex" role="img" focusable="false" viewBox="0 -675.5 2729.7 757.5" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><use data-c="32" xlink:href="#MJX-TEX-N-32"></use></g><g data-mml-node="mi" transform="translate(533,363) scale(0.707)"><use data-c="1D45B" xlink:href="#MJX-TEX-I-1D45B"></use></g></g><g data-mml-node="mo" transform="translate(1229.5,0)"><use data-c="2212" xlink:href="#MJX-TEX-N-2212"></use></g><g data-mml-node="mn" transform="translate(2229.7,0)"><use data-c="31" xlink:href="#MJX-TEX-N-31"></use></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>2</mn><mi>n</mi></msup><mo>−</mo><mn>1</mn></math></mjx-assistive-mml></mjx-container>, where <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.357ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 600 453" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45B" xlink:href="#MJX-TEX-I-1D45B"></use></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math></mjx-assistive-mml></mjx-container> is the number of disks. For 20 disks, this gives us 1,048,575 - over 1 million moves! Obviously, even if it could pull the answer out of thin air, it's pointless to test the models on 20 disks, as it's impossible for them to even write it out!</p>
+<p>After looking at o3-mini's token system, it takes around 8 tokens to output a single move in the format given in the paper. This means that even for 15 disks, it would require 262136 tokens just to output the final answer - this is without any room for thinking.</p>
+<p>Looking at the graph I provided before for o3-mini, the trend seems to be that it uses around 200 tokens per move required. If we extrapolate that out to 10 disks, we would expect it to use about 200,000 tokens - well beyond the limit.</p>
+<p>As it turns out, the LRMs are correct in their assessment that this is impossible, although this is likely somewhat of a coincidence, as I doubt they were informed of the limit placed on them. Not all of the LRMs see this happen at the same time either - some choose to give up on manual work earlier, such as deepseek.</p>
+<p>For some more precise calculations, read <a href="https://x.com/scaling01/status/1931783050511126954">this tweet</a>.</p>
+<h1>In Summary</h1>
+<p>There are many other smaller issues I could bring up throughout the paper, whether it's the lack of information on the parameters used to sampling the models, the choice of a temperature of 1, the often strange prompts used for the problems or the simplistic parsing of the model's chain of thought, but overall I think I've addressed the main issues with the paper. Statements made in the paper such as "We show that state-of-the-art LRMs (e.g., o3-mini, DeepSeek-R1, Claude-3.7-Sonnet-Thinking) still fail to develop generalizable problem-solving capabilities" are unfounded, and arguably directly contradicted by their own results.</p>
+<h2>Acknowledgements</h2>
+<p>Thanks to InfuriatinglyOpaque in DGG chat for discussion around this paper, as well as helping pull together various sources and articles.</p>
+<p>For anyone with more of a background on testing reasoning, yes, Towers of Hanoi is often used to test and/or demonstrate reasoning of models, but this is almost exclusively in situations where the model being tested is not capable of utilising the algorithm, or in some cases, a model may be capable of using the algorithm, but Towers of Hanoi is just one of many (as in, often 1 of 50) problems tested, with the results from it being largely inconsequential to the conclusions of the paper.</p>
+<p>If it's unclear why Towers of Hanoi is a different class of problem to the others, consider the steps required as a function of the solution length. Towers of Hanoi's algorithm is <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="4.844ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 2141 1000" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D442" xlink:href="#MJX-TEX-I-1D442"></use></g><g data-mml-node="mo" transform="translate(763,0)"><use data-c="28" xlink:href="#MJX-TEX-N-28"></use></g><g data-mml-node="mi" transform="translate(1152,0)"><use data-c="1D45B" xlink:href="#MJX-TEX-I-1D45B"></use></g><g data-mml-node="mo" transform="translate(1752,0)"><use data-c="29" xlink:href="#MJX-TEX-N-29"></use></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></math></mjx-assistive-mml></mjx-container> with <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.357ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 600 453" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45B" xlink:href="#MJX-TEX-I-1D45B"></use></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math></mjx-assistive-mml></mjx-container> as solution length. Blocks World is <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="5.614ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 2481.3 1000" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D442" xlink:href="#MJX-TEX-I-1D442"></use></g><g data-mml-node="mo" transform="translate(763,0)"><use data-c="28" xlink:href="#MJX-TEX-N-28"></use></g><g data-mml-node="msup" transform="translate(1152,0)"><g data-mml-node="mi"><use data-c="1D450" xlink:href="#MJX-TEX-I-1D450"></use></g><g data-mml-node="mi" transform="translate(466,363) scale(0.707)"><use data-c="1D45B" xlink:href="#MJX-TEX-I-1D45B"></use></g></g><g data-mml-node="mo" transform="translate(2092.3,0)"><use data-c="29" xlink:href="#MJX-TEX-N-29"></use></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mo stretchy="false">(</mo><msup><mi>c</mi><mi>n</mi></msup><mo stretchy="false">)</mo></math></mjx-assistive-mml></mjx-container>, where <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.98ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 433 453" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D450" xlink:href="#MJX-TEX-I-1D450"></use></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>c</mi></math></mjx-assistive-mml></mjx-container> is some branching factor.</p>
+
+</article>
+      </div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /posts/illusion-of-research/ -->
+  <svg style="display: none;" id="MJX-SVG-global-cache"><defs><path id="MJX-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-TEX-N-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path id="MJX-TEX-I-1D442" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"></path><path id="MJX-TEX-N-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJX-TEX-N-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path id="MJX-TEX-I-1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></defs></svg></body>
+</html>
