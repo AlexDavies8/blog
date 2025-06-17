@@ -22,4 +22,8 @@ export default async function(eleventyConfig) {
     eleventyConfig.addFilter("formatDate", date => {
         return new Intl.DateTimeFormat("en-GB", { day: 'numeric', month: 'short', year: 'numeric' }).format(date);
     });
+
+    return {
+        pathPrefix: 'https://alexdavies8.github.io/blog/'
+    }
 }
