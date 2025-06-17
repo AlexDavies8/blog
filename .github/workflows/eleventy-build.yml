@@ -1,21 +1,28 @@
-name: Eleventy Build
-on: [push]
+name: Deploy Eleventy to GitHub Pages
+on:
+  push:
+    branches:
+      - master
 jobs:
-  build_deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@master
-      - name: Setup Node.js 18
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '^18'
+          cache: 'npm'
       - name: Install Dependencies
-        run: npm ci # Or npm install if you prefer
-      - name: Build Eleventy
-        run: npx @11ty/eleventy # Or yarn eleventy, if you use Yarn
-      - name: Deploy
+        run: npm ci
+      - name: Run Eleventy Build
+        run: npx @11ty/eleventy
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _site
           publish_branch: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
