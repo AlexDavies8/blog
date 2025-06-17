@@ -24,6 +24,6 @@ export default async function(eleventyConfig) {
     });
 
     return {
-        pathPrefix: 'https://alexdavies8.github.io/blog/'
+        pathPrefix: "/blog/"
     }
 }
