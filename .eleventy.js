@@ -6,9 +6,7 @@ import mathjaxPlugin from "eleventy-plugin-mathjax";
 export default async function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy({ "public" : "/"});
 
-    eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
-        formats: ["avif", "webp", "jpeg"]
-    });
+    eleventyConfig.addPlugin(eleventyImageTransformPlugin);
     eleventyConfig.addPlugin(HtmlBasePlugin);
     eleventyConfig.addPlugin(syntaxHighlight);
     eleventyConfig.addPlugin(mathjaxPlugin);

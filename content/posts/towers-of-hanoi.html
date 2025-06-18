@@ -1,19 +1,16 @@
 <div class="towers-of-hanoi-container">
     <div class="container">
-        <h1>Towers of Hanoi</h1>
-        
         <div class="controls">
             <div class="slider-container">
                 <label for="ringCount">Rings:</label>
-                <input type="range" id="ringCount" min="3" max="8" value="3">
+                <input type="range" id="ringCount" min="1" max="8" value="3">
                 <span id="ringCountDisplay">3</span>
             </div>
+            <div class="stats">
+                <div>Moves: <span id="moveCount">0</span></div>
+                <div>Optimal: <span id="optimalMoves">7</span></div>
+            </div>
             <button id="resetBtn">Reset Game</button>
-        </div>
-
-        <div class="stats">
-            <div>Moves: <span id="moveCount">0</span></div>
-            <div>Optimal: <span id="optimalMoves">7</span></div>
         </div>
 
         <div id="victoryMessage" class="victory" style="display: none;">
@@ -33,6 +30,7 @@
         margin: 2rem 0;
         display: flex;
         justify-content: center;
+        position: relative;
     }
     
     .towers-of-hanoi-container .container {
@@ -71,6 +69,12 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        border: 2px solid rgba(255,255,255,0.3);
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
     }
 
     .towers-of-hanoi-container input[type="range"] {
@@ -97,7 +101,6 @@
         display: flex;
         justify-content: center;
         gap: 30px;
-        margin-bottom: 20px;
         font-weight: bold;
     }
 
@@ -164,24 +167,23 @@
         box-shadow: 0 8px 20px rgba(0,0,0,0.5);
     }
 
-    .towers-of-hanoi-container .tower.highlight {
-        /* background: rgba(255, 255, 255, 0.2);
-        border-radius: 10px; */
-    }
-
     .towers-of-hanoi-container .victory {
+        position: absolute;
+        /* top: 50%; */
+        left: 50%;
         text-align: center;
         color: white;
         font-size: 24px;
         font-weight: bold;
-        margin: 20px 0;
+        white-space: nowrap;
+        overflow: hidden;
         animation: bounce 1s infinite;
     }
 
     @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-        40% { transform: translateY(-10px); }
-        60% { transform: translateY(-5px); }
+        0%, 20%, 50%, 80%, 100% { transform: translate(-50%, -50%) translateY(0); }
+        40% { transform: translate(-50%, -50%) translateY(-10px); }
+        60% { transform: translate(-50%, -50%) translateY(-5px); }
     }
 </style>
 
