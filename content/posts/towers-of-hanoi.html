@@ -12,11 +12,9 @@
             </div>
             <button id="resetBtn">Reset Game</button>
         </div>
-
         <div id="victoryMessage" class="victory" style="display: none;">
             🎉 Congratulations! You solved it! 🎉
         </div>
-
         <div class="game-area">
             <div class="tower" data-tower="0"></div>
             <div class="tower" data-tower="1"></div>
@@ -31,8 +29,8 @@
         display: flex;
         justify-content: center;
         position: relative;
-        width: 750px;
-        max-width: 750px;
+        width: 710px;
+        max-width: 710px;
     }
     
     .towers-of-hanoi-container .container {
@@ -392,136 +390,4 @@
             new TowersOfHanoi();
         }
     })();
-
-function autoScale(element, options = {}) {
-  const {
-    minScale = 0.1,
-    maxScale = 1,
-    padding = 0,
-    debounceMs = 100,
-  } = options;
-
-  let naturalDimensions = null;
-  let referenceContainer = null;
-  let wrapper = null;
-
-  function createWrapper() {
-    // Create wrapper element
-    wrapper = document.createElement('div');
-    wrapper.style.overflow = 'hidden';
-    wrapper.style.position = 'relative';
-    
-    // Insert wrapper before the element and move element inside
-    element.parentNode.insertBefore(wrapper, element);
-    wrapper.appendChild(element);
-    
-    return wrapper;
-  }
-
-  function findStableContainer(el) {
-    let current = el.parentElement;
-    while (current && current !== document.body) {
-      const computedStyle = window.getComputedStyle(current);
-      // Look for containers with fixed width or max-width
-      if (
-        computedStyle.maxWidth !== "none" ||
-        computedStyle.width !== "auto" ||
-        current.classList.contains("article") ||
-        current.tagName === "ARTICLE" ||
-        current.classList.contains("content")
-      ) {
-        return current;
-      }
-      current = current.parentElement;
-    }
-    return document.body;
-  }
-
-  function measureNaturalDimensions() {
-    // Create a temporary clone to measure natural size
-    const clone = element.cloneNode(true);
-    clone.style.position = "absolute";
-    clone.style.visibility = "hidden";
-    clone.style.transform = "none";
-    clone.style.maxWidth = "none";
-    clone.style.width = "auto";
-
-    document.body.appendChild(clone);
-    const rect = clone.getBoundingClientRect();
-    document.body.removeChild(clone);
-
-    return {
-      width: rect.width,
-      height: rect.height,
-    };
-  }
-
-  function updateScale() {
-    // Create wrapper if it doesn't exist
-    if (!wrapper) {
-      wrapper = createWrapper();
-    }
-
-    // Get natural dimensions (cached after first measurement)
-    if (!naturalDimensions) {
-      naturalDimensions = measureNaturalDimensions();
-    }
-
-    // Get reference container (cached after first measurement)
-    if (!referenceContainer) {
-      referenceContainer = findStableContainer(wrapper);
-    }
-
-    const containerRect = referenceContainer.getBoundingClientRect();
-
-    // Calculate available space
-    const availableWidth = containerRect.width - padding * 2;
-    const availableHeight = containerRect.height - padding * 2;
-
-    // Calculate scale ratios using natural dimensions
-    const scaleX = availableWidth / naturalDimensions.width;
-    const scaleY = availableHeight / naturalDimensions.height;
-
-    // Use the smaller ratio to ensure it fits
-    let scale = Math.min(scaleX, scaleY);
-
-    // Clamp to min/max scale
-    scale = Math.max(minScale, Math.min(maxScale, scale));
-
-    // Apply the scale to the element
-    element.style.transform = `scale(${scale})`;
-    element.style.transformOrigin = "top left";
-
-    // Size the wrapper to match the scaled dimensions
-    wrapper.style.width = `${naturalDimensions.width * scale}px`;
-    wrapper.style.height = `${naturalDimensions.height * scale}px`;
-  }
-
-  // Debounced resize handler
-  let resizeTimeout;
-  function handleResize() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(updateScale, debounceMs);
-  }
-
-  // Initial scale (with small delay to ensure DOM is ready)
-  setTimeout(updateScale, 10);
-
-  // Listen for resize events
-  window.addEventListener("resize", handleResize);
-
-  // Return cleanup function
-  return () => {
-    window.removeEventListener("resize", handleResize);
-    clearTimeout(resizeTimeout);
-    
-    // Cleanup: move element back out of wrapper and remove wrapper
-    if (wrapper && wrapper.parentNode) {
-      wrapper.parentNode.insertBefore(element, wrapper);
-      wrapper.parentNode.removeChild(wrapper);
-    }
-  };
-}
-
-autoScale(document.querySelector(".towers-of-hanoi-container"));
 </script>

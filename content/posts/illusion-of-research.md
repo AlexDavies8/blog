@@ -10,89 +10,135 @@ Apple researchers recently released a rather bold paper called [The Illusion of 
 
 However, this isn't just a case of people reading the title and making up some fantastical story - the paper really does make some absurd and quite frankly unfounded claims, although they aren't quite the claims reported in most online coverage.
 
-# So what are they *really* claiming?
+# 'Generalisable' Problem Solving
 
-The current frontier of AI models are all something known as Large Reasoning Models (LRMs). These are regular Large Language Models (LLMs) that have been trained specifically to write out their line of reasoning, often referred to as a "chain of thought", before giving an answer. This approach gives significantly better accuracy on difficult or large tasks requiring reasoning.
+> We show that state-of-the-art LRMs (e.g., o3-mini, DeepSeek-R1, Claude-3.7-Sonnet-Thinking) still fail to develop generalizable problem-solving capabilities.
 
-This paper makes the case that LRMs have the same fundamental limitations as LLMs, and are not capable of generalised reasoning. They also make various smaller implications throughout the paper, including that LRMs aren't actually doing reasoning, they are just pattern matching to data they've seen while training.
+This is a quote directly from the paper, but what does this actually mean? Well, the authors never seemed to feel the need to clarify this, but there are many thinks that this could refer to, even within the context of machine learning.
 
-Yet, despite these very bold claims - after all, this is going against essentially all prior precedence - the paper is riddled with poor assumptions, a lack of consideration for obvious potential issues, and at the end of it all even their own results seem to contradict their conclusions.
+The paper evaluates 'generalisable reasoning capabilities' by testing them on a handful of common logic puzzles, many of which often used in machine learning. But the kind of reasoning that these problems demonstrate is quite specific - something referred to as 'Planning', although this is a bit less general than it sounds.
 
-# An Error in Assumption
+For many problems we can represent them as having a 'state space' - a point in this space represents a single state the game can be in. Then, we can create arrows, often called 'edges', between these points, representing an action that takes us from one state to another. Lets see this in action by looking at one of the puzzles used in the paper - Tower of Hanoi.
 
-To evaluation the reasoning capabilities of LRMs vs LLMs, the paper tests the models on a variety of logic puzzles. I'd encourage you to read the paper itself, as despite its issues, it is written fairly well, and is not particularly technical or difficult to read. That said, I'll still provide a quick overview of one of the problems - Towers of Hanoi.
-
-Towers of Hanoi is a classic logic puzzle, often used in machine learning, that involves moving a stack of rings starting on the left pole all onto the right pole. However, you can only move one ring at a time, and you're not allowed to stack a larger ring on top of a smaller one. The goal is to find the shortest sequence of moves to carry out this task. You can try it out below!
+Tower of Hanoi involves three poles that can have discs on them. The discs start on the first poles, with the largest at the bottom, decreasing in size as they go up. The aim is to move the discs onto the last pole in the same configuration - largest at the bottom, smallest at the top - in the fewest number of moves. There are only three rules - you can only move one disc at a time, you can only move the top disc on any given pole, and you cannot place a disc on top of a smaller one. You can try it out below - see if you can figure out any patterns for how to solve it.
 
 {% include "./towers-of-hanoi.html" %}
 
-To an onlooker, this seems like a decent enough test of reasoning. However, there is actually a very simple, well-known algorithm that allows you to solve Towers of Hanoi for any number of rings in an optimal way. It's not the most intuitive, but if you want to, you can follow it step by step without even considering the actual puzzle.
+The state space for Tower of Hanoi gets quite large, so let's just look at a section of it for 3 disc. For this puzzle, since every move can be reversed by just moving the disc back, all edges are bi-directional (can be taken in either direction).
 
-I would argue that being able to follow a straightforward set of instructions step by step isn't really indicative of reasoning. Solving Towers of Hanoi with a larger number of disks is more work, and arguably 'harder', as it requires more steps, but it's not really demonstrating that it's better at reasoning.
+<img src="../media/towers-state-space.png" alt="Subsection of the state space for Tower of Hanoi" />
 
-If I asked you to add two long numbers, you could probably do it fine - there is a pretty simple process for adding numbers together via column addition. I could also say that adding two 50-digit numbers together is harder than just 195 + 327. There's certainly more chance of making a mistake. But would we really say that being able to add long numbers together this way indicates that you are better at reasoning, or are you just better at reliably carrying out a long set of simple steps.
+Planning, as a form of reasoning, involves finding a path from a specific start state to a specific end state. Some puzzles are happy to accept any path - as long as you get there eventually, it's considered solved. Other puzzles may require the shortest path; the least number of moves.
 
-<img src="../media/adding-comparison.svg" alt="Comparison of adding two short vs two long numbers">
+You might have noticed that when solving Tower of Hanoi, you end up in a consistent pattern, especially as you increase the number of discs (denoted $n$). As it turns out, there is a well known algorithm for solving Tower of Hanoi, which can be seen below. It's not a problem if you don't understand it, what's important is just that it exists and is fairly easy to carry out step by step.
 
-The paper makes the observation that when told explicitly to use this algorithm, the models don't do any better. But then very strangely, they make the absurd claim that this shows that they are just repeating answers they've seen during training. But there is another, far more obvious explanation - the models were already using that algorithm. After all, this algorithm is well known, and if you ask literally any AI model to solve Towers of Hanoi it will spit out the algorithm without fail, and then step through it to get the answer. Obviously, telling it to use the algorithm makes no difference - it was using it anyway!
+```python
+def towers_of_hanoi(n, source, auxiliary, destination):
+    if n == 1:
+        print(f"Move disc 1 from {source} to {destination}")
+    else:
+        towers_of_hanoi(n - 1, source, destination, auxiliary)
+        print(f"Move disc {n} from {source} to {destination}")
+        towers_of_hanoi(n - 1, auxiliary, source, destination)
+```
 
-# Think About it for a Second
+To solve the puzzle for 3 rings, you would perform `towers_of_hanoi(3, 'A', 'B', 'C')`, where the 3 poles are labelled A, B and C respectively.
 
-Another one of the problems they evaluate the LLMs and LRMs on is Blocks World problems. This is quite similar to Tower of Hanoi, and involves a collection of blocks on a table, and a claw arm that can pick them up to move them around. The claw arm can be given instructions to pick up or put down a block, either from the table or onto/from the top of another block. The goal is to go from a starting arrangement of blocks to some given target arrangement in the shortest number of moves. An example of some moves can be seen below.
+<details>
+<summary>See this algorithm run step by step</summary>
 
-<img src="../media/blocks-world.png" alt="Blocks world example">
+```python
+towers_of_hanoi(3, 'A', 'B', 'C')
+    towers_of_hanoi(2, 'A', 'C', 'B')
+        towers_of_hanoi(1, 'A', 'B', 'C')
+            # Move disc 1 from A to C
+        # Move disc 2 from A to B
+        towers_of_hanoi(1, 'C', 'A', 'B')
+            # Move disc 1 from C to B
+    # Move disc 3 from A to C
+    towers_of_hanoi(2, 'B', 'A', 'C')
+        towers_of_hanoi(1, 'B', 'C', 'A')
+            # Move disc 1 from B to A
+        # Move disc 2 from B to C
+        towers_of_hanoi(1, 'A', 'B', 'C')
+            # Move disc 1 from A to C
+```
+</details>
 
-For only a handful of blocks - say 2 or 3 - it's quite easy to just sort of 'intuit' the solution. I would argue that while it displays some amount of reasoning, this doesn't generalise to even around 4 or 5 blocks. At that point, you need to start reasoning about the problem in a more structured way - considering sequences of moves more carefully, and likely writing some stuff down and keeping track of things.
+If we think about this algorithm in terms of the 'state space' of the problem, the algorithm gives us a guaranteed way to find the shortest path to the solved state.
 
-Here is how the models performed - Claude 3.7 Sonnet is an LLM, and the (+thinking) model is the LRM version of the same model. The accuracy measures the percentage of the time that the model got the correct sequence of moves (correct runs divided by total runs).
+<img src="../media/towers-state-space-path.png" alt="Path through the state space" />
 
-<img src="../media/blocks-world-graph.png" alt="Blocks world accuraccy graph">
+So how is this important? Well, if we use the algorithm, we don't really have to do any planning. The algorithm may take a bit of work to run, but we don't have to think multiple moves ahead; we don't need to consider the implications that our next move may have on future moves. That's not to say that running the algorithm doesn't show *something* - at the very least it can demonstrate that you can reliably follow a set list of instructions. But would we really say this is a good model for 'generalisable reasoning capabilities'?
 
-And perhaps unsurprisingly, although it's not massively reliable, the LRM (thinking model) is able to solve the problem for up to 10 blocks in about 1 of every 4 tries, but the LLM is essentially incapable of solving it with more than 5 blocks, and is still not very good even for just 4 blocks. 
+# Asking for the Impossible
 
-The LRM is even able to very occasionally get it correct for problems involving 20 blocks! That just isn't going to happen through chance - there is clearly something different in the way the LRM is considering the problem. 
+As it turns out, quite a lot of what the authors were asking the LLMs to solve is either impossible, or completely impractical, given the constraints they impose. To figure out why, we need to analyse how hard it is to solve each problem in a more objective sense.
 
-It's also useful to consider that Blocks World puzzles don't have a known guaranteed good solution - for Towers of Hanoi, you will always get the optimal sequence of moves with the algorithm, but with Blocks World you really can't do much better than just looking at every possible sequence of moves (you can optimise this slightly, but it's an NP-hard problem in the general case).
+## What Constraints?
 
-As the number of blocks increases, the number of possible sequences of moves explodes exponentially. The more moves there are, and the more sequences you need to consider, the more likely it is that a small mistake will slip in and mess up the solution. Yet the authors of this paper claim that because the LRMs eventually fail to find the right answer if you increase the blocks enough, it shows that they have the same fundamental limitations as LLMs.
+The main constraint on the LLMs within the paper that is consistent across all problems is a token limit. This simply caps the number of tokens that it's allowed to output to a fixed number - in this case to 64,000. This includes both the tokens used for thinking, and the tokens required for the final answer.
 
-The paper also doesn't consider the amount of work it takes to find a solution for each problem - only the solution's length. As an example of the difference - imagine for some kind of game you have at any given point 2 moves you can make, and there's some optimal solution you need to find. We'll also assume that the best way you can solve this game is to just try every possible sequence of moves and record the shortest sequence that gets to the goal. If the solution requires 5 moves, we need to consider $2^5$ sequences of moves, which is 32. Now imagine that instead of a choice of 2 moves, you have a choice of 10. This means there are now $10^5$ possible sequences - that's 100,000!
+## Towers of Hanoi
 
-The authors state in their conclusion that it's "surprising" that some problems requiring fewer moves for a solution seem harder for the AI models, but if you consider the number of possible solutions they need to consider, this "surprise" disappears.
+The algorithm to solve Tower of Hanoi requires $2^n - 1$ steps, where $n$ is the number of discs. The paper requires that each move is outputted in the format `[disc_id, source, target]`. For example, to move the second smallest disc from the first ring to the last ring, we perform the move `[1, 0, 2]` (we generally start counting at 0 when programming). discs are labelled with the smallest as 0 and the largest as $n - 1$. Now, we need to figure out how many tokens each move will require to write out. Luckily, OpenAI provides their tokeniser publicly, and using it we can see that a single move takes 6 tokens (including spaces it actually requires 9, but I'll underestimate to be generous), although this may increase as we get to $n=11$ and the number of digits increases. Therefore, at absolute minimum, we have the following equation for the number of tokens required **just to write out the final answer** - this isn't including any working out or reasoning.
+$$
+\text{tokens} = 6 \times (2^n - 1)
+$$
+From the paper's results, we can also find the average number of tokens *actually* used per step of the algorithm. I've done this for o3-mini, based on Figure 13 in the paper by fitting the line $\text{tokens} = c \times (2^n - 1)$ to the graph$^*$, where $c$ is the number of tokens required per step. This gives a value for $c$ of about 185 tokens of thinking per step of the algorithm.
+Now, we can draw out a graph of the number of tokens required.
 
-A more thorough consideration of this can be seen [here](https://x.com/scaling01/status/1931854370716426246).
+<img src="../media/towers_possible.png" alt="Graph showing required and estimated token counts" />
 
-# Token Limits and Refusals
+So we can see quite clearly that any number of discs over 13 is completely impossible - even if the LLM could magically produce the answer from thin air, it wouldn't be able to write it out. But even more interesting is that with the amount of working out the LLM is doing per step, unless it can somehow magically become far more efficient with its working out, it couldn't complete even 9 discs within the token limit. Given that o3-mini successfully completes the problem for 7 discs roughly half of the time - with Claude (thinking) and Deepseek R1 even sometimes completing 8 discs - these models are doing just about the best they can on this problem.
 
-Another interesting observation in the paper that they draw strange conclusions from is that when a problem gets long enough, the LRMs begin to spend less time thinking than before. I'd like to highlight this (slightly messy) graph from the appendix of the paper as an example. LLMs and LRMs don't see characters or words, but instead "tokens", which may be just sections of a word or possibly multiple words, but these can be thought of as a reasonable measure for the length of the text that it produces when 'thinking'. The blue line gives the average number of tokens, the green circles represent that the run was correct, and the crosses represent failed runs.
+## River Crossing
 
-<img src="../media/o3-graph.png" alt="Graph of thinking tokens vs complexity">
+Another puzzle used in the paper is the River Crossing problem, involving $n$ actors and $n$ agents, as well as a boat that can contain a maximum of $k$ people at a given time. Everyone starts on the left bank of a river, including the boat. The aim is to transport everyone to the other side. The boat requires at least 1 person inside to be able to move, and an actor cannot be left with another agent unless it's own agent is also with it.
 
-As the number of disks for Tower of Hanoi increases, the number of tokens also increases, up until 8 disks, where it falls off a cliff and gets everything wrong. In fact, the shape of the graph looks suspiciously similar to the graph of how many steps are required to calculate a solution for Towers of Hanoi ( $2^n-1$ ).
+Not all combinations of $n$ and $k$ allow for a valid solution. For example, when $n$ is 6 or more and $k$ is 3, it's not possible to solve the problem - no matter what you try, you'll end up being unable to move everyone to the other side without violating the rules above. In fact, this is subtly hinted at in the paper itself:
 
-<img src="../media/o3-graph-comparison.png" alt="2^n-1 overlaid on the previous graph">
+> Boat Capacity Constraint: The boat can carry at most $k$ individuals at a time, where $k$ is typically set to 2 for smaller puzzles $(N \le 3)$ and 3 for larger puzzles $(N \le 5)$.
 
-So why does it suddenly stop? Well, there are a couple of issues here. I discovered [an article online](https://www.seangoedecke.com/illusion-of-thinking/) where the author decided to just try asking one of the models to solve Towers of Hanoi with 10 disks. Well, it turns out that the reason it does less thinking is because it stops running the algorithm! It decides that it's just too long to write out by hand, and looks for some alternative approach (iterative, rather than recursive).
-![[Pasted image 20250615185341.png]]
-After testing this myself on multiple models, while the point at which they decide to give up on doing it manually does vary, there is always a point at which they say it's either "impractical", "difficult", or just straight up "impossible" to do it all manually.
+But then they specifically state that they use $k=3$ for all $n$ above 3.
 
-# It turns out, they're right!
+> For $n = 2, n = 3$ pairs, we use boat capacity of $k = 2$ and for larger number of pairs we use $k = 3$.
 
-In the Apple paper, they state that they placed a 64k token limit on the number of tokens in the answer (this includes non-thinking tokens too, so thinking tokens should be slightly less than this too).
+So then it's hardly a surprise that the results for the River Crossing task show failure for all LLMs at $n=6$ - they're asking them to find a solution that doesn't exist.
 
-I decided to do a few more calculations, as many of these logic problems scale exponentially - the amount of work required to solve them very rapidly increases. For Tower of Hanoi, as mentioned before, the number of moves required is $2^n -1$, where $n$ is the number of disks. For 20 disks, this gives us 1,048,575 - over 1 million moves! Obviously, even if it could pull the answer out of thin air, it's pointless to test the models on 20 disks, as it's impossible for them to even write it out!
+<img src="../media/river-crossing-graph.png" alt="Graph showing river crossing accuracy vs number of people" />
 
-After looking at o3-mini's token system, it takes around 8 tokens to output a single move in the format given in the paper. This means that even for 15 disks, it would require 262136 tokens just to output the final answer - this is without any room for thinking. 
+## Blocks World
 
-Looking at the graph I provided before for o3-mini, the trend seems to be that it uses around 200 tokens per move required. If we extrapolate that out to 10 disks, we would expect it to use about 200,000 tokens - well beyond the limit.
+# TODO: REWRITE SECTION - SEE DISCLAIMERS BELOW
 
-As it turns out, the LRMs are correct in their assessment that this is impossible, although this is likely somewhat of a coincidence, as I doubt they were informed of the limit placed on them. Not all of the LRMs see this happen at the same time either - some choose to give up on manual work earlier, such as deepseek.
+> Pretty sure the authors fucked up literally the entire evaluation for this section, because their numbers for number of moves for the solutions to this problem are just wrong - they are clearly using some non-optimal strategy. I'm pretty sure that every single model on the market actually scores 0 on this problem past trivial cases like N=3 and below. 
 
-For some more precise calculations, read [this tweet](https://x.com/scaling01/status/1931783050511126954).
+> Optimal strategy is move all apart from 1 block from stack 0 to stack 1 (1 block at a time), then move last from stack 0 to stack 2. Move all the stuff that used to be in stack 0 from the top of stack 1 to stack 2. Now you can alternate which stack you take from and put into stack 0, starting with 1 (i.e. move top of stack 1 to stack 0, then top of stack 2 to 0, then 1 to 0, then 2 to 0, ...). You should now have target solution.
 
-# In Summary
 
-There are many other smaller issues I could bring up throughout the paper, whether it's the lack of information on the parameters used to sampling the models, the choice of a temperature of 1, the often strange prompts used for the problems or the simplistic parsing of the model's chain of thought, but overall I think I've addressed the main issues with the paper. Statements made in the paper such as "We show that state-of-the-art LRMs (e.g., o3-mini, DeepSeek-R1, Claude-3.7-Sonnet-Thinking) still fail to develop generalizable problem-solving capabilities" are unfounded, and arguably directly contradicted by their own results.
+Blocks World is a puzzle that involves moving blocks around to try and reach a given target state from an initial state in the fewest moves. It's similar to Tower of Hanoi, but is much more general - the only restriction is that a block can only be picked up or placed on the top of a stack (or on an empty stack). For the general case, the best we can really do to solve this algorithmically is to search through all the possible block arrangements using something like A* - a common search algorithm used for planning problems. But even using this, it can easily require checking hundreds of thousands of arrangements for anything more than 10 blocks.
+
+But the LLMs manage to do much better than this - o3-mini was able to solve it for 40 blocks! How?
+
+Well, the paper doesn't randomly generate initial and target states, or really do anything to create a typical 'general' case. Instead, for $n$ blocks, they start with two stacks, each with half the blocks in. For the target, they just require that the 2 stacks have been interleaved, with the final stack being the left-most stack. Try below to see if you can figure out any patterns.
+
+{% render "./blocks-world.html" %}
+
+So, what's the strategy? Well, a fairly obvious way to do it is to just alternate which stack you take a block from, placing them in stack 3. Once all the blocks are there, you can move them to stack 1.... except, that results in the order being reversed. Actually, though this method looks promising, you need to move the blocks to stack 2 first, then to stack 1, as moving the stack one block at a time reverses the order. But we can do better than that. Imagine if we could place the blocks straight onto stack 1 in order instead of stack 3 - then we wouldn't need to waste so many moves reversing the order. Well, we can - place all of stack 1 onto stack 2 one block at a time, then pull all the blocks from stack 1 you just put on stack 2, and place them on stack 3 one at a time. You might notice that we've basically moved stack 1 to stack 3, but kept the order correct, so now we can alternate between stacks 2 and 3 to place them straight into their final places.
+
+So, what's the strategy? Well, how about we ask o3-mini? I asked it to solve the problem for 52 blocks, and it actually got it correct on the first try! This was rather lucky, as from further testing, it only rarely seems to get it right. It also gave this nice explanation within its thinking block.
+
+<img src="../media/thinking-trace-blocks.png" alt="Thinking trace for blocks world solution" />
+
+If that wasn't clear, we can alternate between pulling a block from stack 1 and stack 2, moving the blocks onto stack 3. Once this is done, we move all of stack 3 to stack 2, which reverses it, then move all of stack 2 to stack 1, reversing it again and giving us our final result.
+
+As with Tower of Hanoi, carrying out the algorithm step-by-step didn't really require any planning. However, this isn't a well-known algorithm, as it isn't common to set up the initial and target states in this way, so based off just the general rules for the Blocks World puzzle, and the initial and target states, the LLMs are able to figure out not only that the two input stacks have to be interleaved, but they also manage to turn that into an algorithm that they can apply to solve the problem.
+
+This arguably demonstrates quite a reasonable capacity for problem solving - the LLMs had to consider the structure of the initial and target states, notice that there was a pattern, then figure out how to properly interleave the blocks, and finally realise that moving the blocks directly back to the first stack would reverse them, so they need to be moved twice so that they end up in the correct order. That is - the papers own data appears to contradict the authors' own conclusions.
+
+
+
 
 ## Acknowledgements
 
