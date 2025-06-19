@@ -36,7 +36,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font: 17px var(--font-family);
+  font: 19px var(--font-family);
   color: var(--text-color);
   background-color: var(--background-color);
   -webkit-font-smoothing: antialiased;
@@ -102,6 +102,21 @@ pre {
 }
 code {
   word-break: break-all;
+}
+
+blockquote {
+  border-left: 4px solid #ccc;
+  padding-left: 24px;
+  font-style: italic;
+}
+blockquote > p {
+  display: inline;
+}
+blockquote:before {
+  content: '“';
+}
+blockquote:after {
+  content: '”';
 }
 
 .article pre[class*="language-"] {
@@ -211,7 +226,7 @@ a[href].direct-link:focus:visited,
 .wrapper {
   max-width: 750px;
   margin: 0 auto;
-  padding: 20px 40px 100px 40px;
+  padding: 20px 20px 100px 20px;
   box-sizing: border-box;
 }
 
