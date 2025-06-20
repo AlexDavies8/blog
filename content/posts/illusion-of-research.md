@@ -14,7 +14,7 @@ However, this isn't just a case of people reading the title and making up some f
 
 > We show that state-of-the-art LRMs (e.g., o3-mini, DeepSeek-R1, Claude-3.7-Sonnet-Thinking) still fail to develop generalizable problem-solving capabilities.
 
-This is a quote directly from the paper, but what does this actually mean? Well, the authors never seemed to feel the need to clarify this, but there are many thinks that this could refer to, even within the context of machine learning.
+This is a quote directly from the paper, but what does this actually mean? Well, the authors never seemed to feel the need to clarify this, but there are many things that this could refer to, even within the context of machine learning.
 
 The paper evaluates 'generalisable reasoning capabilities' by testing them on a handful of common logic puzzles, many of which often used in machine learning. But the kind of reasoning that these problems demonstrate is quite specific - something referred to as 'Planning', although this is a bit less general than it sounds.
 
@@ -110,34 +110,31 @@ So then it's hardly a surprise that the results for the River Crossing task show
 
 ## Blocks World
 
-# TODO: REWRITE SECTION - SEE DISCLAIMERS BELOW
-
-> Pretty sure the authors fucked up literally the entire evaluation for this section, because their numbers for number of moves for the solutions to this problem are just wrong - they are clearly using some non-optimal strategy. I'm pretty sure that every single model on the market actually scores 0 on this problem past trivial cases like N=3 and below. 
-
-> Optimal strategy is move all apart from 1 block from stack 0 to stack 1 (1 block at a time), then move last from stack 0 to stack 2. Move all the stuff that used to be in stack 0 from the top of stack 1 to stack 2. Now you can alternate which stack you take from and put into stack 0, starting with 1 (i.e. move top of stack 1 to stack 0, then top of stack 2 to 0, then 1 to 0, then 2 to 0, ...). You should now have target solution.
-
-
 Blocks World is a puzzle that involves moving blocks around to try and reach a given target state from an initial state in the fewest moves. It's similar to Tower of Hanoi, but is much more general - the only restriction is that a block can only be picked up or placed on the top of a stack (or on an empty stack). For the general case, the best we can really do to solve this algorithmically is to search through all the possible block arrangements using something like A* - a common search algorithm used for planning problems. But even using this, it can easily require checking hundreds of thousands of arrangements for anything more than 10 blocks.
 
 Well, the paper doesn't randomly generate initial and target states, or really do anything to create a typical 'general' case. Instead, for $n$ blocks, they start with two stacks, each with half the blocks in. For the target, they just require that the 2 stacks have been interleaved, with the final stack being the left-most stack. Try below to see if you can figure out any patterns.
 
 {% render "./blocks-world.html" %}
 
-So, what's the strategy? You might notice that it's really easy to create the correct order of blocks on stack 3. After that, we just need to move this to stack 1. Moving every block from one stack to another one by one reverses their order, so we need to do this a second time to flip it back - move all of stack 3 to stack 2, then stack 2 to stack 1. I tried asking various AI models for their approach, and they all ended up with the same result. See o3-mini's explanation.
+So, what's the strategy? Well, I asked o3-mini.
 
 <img src="../media/thinking-trace-blocks.png" alt="Thinking trace for blocks world solution" />
 
 If that wasn't clear, we can alternate between pulling a block from stack 1 and stack 2, moving the blocks onto stack 3. Once this is done, we move all of stack 3 to stack 2, which reverses it, then move all of stack 2 to stack 1, reversing it again and giving us our final result.
 
-Except, this isn't actually the correct answer. Remember that the goal isn't just to get from the initial state to the target - it's to do it in the fewest moves. The optimal method is to move all of stack 1 on top of stack 2, then move those blocks you just placed on top onto stack 3 - this basically just moves stack 1 to stack 3. Now, we can alternate blocks from stack 2 and 3 directly building the final stack in position 1 as needed. Additionally, we can save an extra move at the start by moving the last block from stack 1 directly to stack 3, instead of putting it on top of stack 2 and then taking it straight back off. This means we only need $2n - 1$ moves for $n$ blocks ($2n - 2$ for odd numbers of $n$). It also means that none of the LLMs I asked were able to get it correct.
+And that algorithm does indeed produce the correct arrangement, but it's not optimal, and therefore not the solution - recall that the goal is to get to the target state in the *fewest moves*. Interestingly, every single LLM I asked gave the exact same algorithm as described above.
+
+The optimal algorithm is to move all but one block from stack 1 to stack 2, move the last one from stack 1 to stack 3, then move the blocks we just moved on top of stack 2 to stack 3. This should result in stack 2 being the same as the start, and stack 3 containing exactly the blocks that stack 1 did initially. Then, we can just alternate pulling blocks from stack 2 and stack 3 to construct the correct final arrangement on stack 1.
+
+This solution requires $2n-1$ moves, whereas the LLM's answer requires $3n-2$ moves.
 
 {% render "./blocks-world-anim.html" %}
 
-But hold on, the paper provides a chart of how many moves each problem requires as $n$ increases. I've added some extra points to the graph for the solution described above.
+The paper provides a chart of how many moves each problem requires as $n$ increases. I've added some extra points to the graph for the solution described above.
 
 <img src="../media/move-count-graph.png" alt="Graph showing number of moves required" />
 
-It appears that either the description of how the block arrangements are generated in the paper is incorrect, or it may be the case that the 'correct' answers that the LLMs were evaluated against were, in fact, not actually correct.
+Therefore, it may be the case that the 'correct' answers that the LLMs were evaluated against were, in fact, not actually correct. If so, that would invalidate the entirety of the results for the blocks world problem.
 
 ## Acknowledgements
 
