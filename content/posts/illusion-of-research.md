@@ -119,26 +119,25 @@ So then it's hardly a surprise that the results for the River Crossing task show
 
 Blocks World is a puzzle that involves moving blocks around to try and reach a given target state from an initial state in the fewest moves. It's similar to Tower of Hanoi, but is much more general - the only restriction is that a block can only be picked up or placed on the top of a stack (or on an empty stack). For the general case, the best we can really do to solve this algorithmically is to search through all the possible block arrangements using something like A* - a common search algorithm used for planning problems. But even using this, it can easily require checking hundreds of thousands of arrangements for anything more than 10 blocks.
 
-But the LLMs manage to do much better than this - o3-mini was able to solve it for 40 blocks! How?
-
 Well, the paper doesn't randomly generate initial and target states, or really do anything to create a typical 'general' case. Instead, for $n$ blocks, they start with two stacks, each with half the blocks in. For the target, they just require that the 2 stacks have been interleaved, with the final stack being the left-most stack. Try below to see if you can figure out any patterns.
 
 {% render "./blocks-world.html" %}
 
-So, what's the strategy? Well, a fairly obvious way to do it is to just alternate which stack you take a block from, placing them in stack 3. Once all the blocks are there, you can move them to stack 1.... except, that results in the order being reversed. Actually, though this method looks promising, you need to move the blocks to stack 2 first, then to stack 1, as moving the stack one block at a time reverses the order. But we can do better than that. Imagine if we could place the blocks straight onto stack 1 in order instead of stack 3 - then we wouldn't need to waste so many moves reversing the order. Well, we can - place all of stack 1 onto stack 2 one block at a time, then pull all the blocks from stack 1 you just put on stack 2, and place them on stack 3 one at a time. You might notice that we've basically moved stack 1 to stack 3, but kept the order correct, so now we can alternate between stacks 2 and 3 to place them straight into their final places.
-
-So, what's the strategy? Well, how about we ask o3-mini? I asked it to solve the problem for 52 blocks, and it actually got it correct on the first try! This was rather lucky, as from further testing, it only rarely seems to get it right. It also gave this nice explanation within its thinking block.
+So, what's the strategy? You might notice that it's really easy to create the correct order of blocks on stack 3. After that, we just need to move this to stack 1. Moving every block from one stack to another one by one reverses their order, so we need to do this a second time to flip it back - move all of stack 3 to stack 2, then stack 2 to stack 1. I tried asking various AI models for their approach, and they all ended up with the same result. See o3-mini's explanation.
 
 <img src="../media/thinking-trace-blocks.png" alt="Thinking trace for blocks world solution" />
 
 If that wasn't clear, we can alternate between pulling a block from stack 1 and stack 2, moving the blocks onto stack 3. Once this is done, we move all of stack 3 to stack 2, which reverses it, then move all of stack 2 to stack 1, reversing it again and giving us our final result.
 
-As with Tower of Hanoi, carrying out the algorithm step-by-step didn't really require any planning. However, this isn't a well-known algorithm, as it isn't common to set up the initial and target states in this way, so based off just the general rules for the Blocks World puzzle, and the initial and target states, the LLMs are able to figure out not only that the two input stacks have to be interleaved, but they also manage to turn that into an algorithm that they can apply to solve the problem.
+Except, this isn't actually the correct answer. Remember that the goal isn't just to get from the initial state to the target - it's to do it in the fewest moves. The optimal method is to move all of stack 1 on top of stack 2, then move those blocks you just placed on top onto stack 3 - this basically just moves stack 1 to stack 3. Now, we can alternate blocks from stack 2 and 3 directly building the final stack in position 1 as needed. Additionally, we can save an extra move at the start by moving the last block from stack 1 directly to stack 3, instead of putting it on top of stack 2 and then taking it straight back off. This means we only need $2n - 1$ moves for $n$ blocks ($2n - 2$ for odd numbers of $n$). It also means that none of the LLMs I asked were able to get it correct.
 
-This arguably demonstrates quite a reasonable capacity for problem solving - the LLMs had to consider the structure of the initial and target states, notice that there was a pattern, then figure out how to properly interleave the blocks, and finally realise that moving the blocks directly back to the first stack would reverse them, so they need to be moved twice so that they end up in the correct order. That is - the papers own data appears to contradict the authors' own conclusions.
+{% render "./blocks-world-anim.html" %}
 
+But hold on, the paper provides a chart of how many moves each problem requires as $n$ increases. I've added some extra points to the graph for the solution described above.
 
+<img src="../media/move-count-graph.png" alt="Graph showing number of moves required" />
 
+It appears that either the description of how the block arrangements are generated in the paper is incorrect, or it may be the case that the 'correct' answers that the LLMs were evaluated against were, in fact, not actually correct.
 
 ## Acknowledgements
 

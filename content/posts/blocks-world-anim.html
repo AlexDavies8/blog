@@ -1,0 +1,320 @@
+<div id="block-anim-wrapper"></div>
+<style>
+body {
+    font-family: sans-serif;
+    background: #f9f9f9;
+}
+#block-anim-wrapper {
+    position: relative;
+    width: 710px;
+    height: 500px;
+    margin: 50px auto;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+#block-anim-wrapper .block {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 60px;
+    font-weight: bold;
+    color: #fff;
+    /* transitions for left & top */
+    transition: left 0.5s ease, top 0.5s ease;
+}
+</style>
+<script>
+(() => {
+// configuration
+const cfg = {
+    stackX: [150, 350, 550],
+    blockSize: 60,
+    gap: 10,
+    baseHeight: 4,
+    height: 500,
+    liftY: 50
+};
+const wrapper = document.getElementById("block-anim-wrapper");
+const stacks = [[], [], []];
+const colors = {
+    A: "#4CAF50",
+    B: "#F44336",
+    C: "#2196F3",
+    D: "#FF9800",
+    E: "#ed39e4",
+    F: "#f0e15b"
+};
+let heldBlock = null;
+const initial = [
+    [],
+    [],
+    []
+];
+// create a block element with given label on stackIdx
+function createBlock(label, stackIdx) {
+    const b = document.createElement("div");
+    b.className = "block";
+    b.innerText = label;
+    b.style.background = colors[label] || "#888";
+    wrapper.appendChild(b);
+    stacks[stackIdx].push(b);
+}
+// position every block according to its stack & height
+function positionAll() {
+    stacks.forEach((stk, si) => {
+    stk.forEach((blk, bi) => {
+        const x = cfg.stackX[si] - cfg.blockSize / 2;
+        const y =
+        cfg.height -
+        cfg.baseHeight -
+        cfg.blockSize * (bi + 1) -
+        cfg.gap * bi;
+        blk.style.left = x + "px";
+        blk.style.top = y + "px";
+        blk.style.zIndex = bi + 1;
+    });
+    });
+}
+// animate element to (x,y), resolve when transition of `prop` ends
+function moveTo(elem, x, y, prop) {
+    return new Promise(resolve => {
+    const onEnd = e => {
+        if (!prop || e.propertyName === prop) {
+        elem.removeEventListener("transitionend", onEnd);
+        resolve();
+        }
+    };
+    elem.addEventListener("transitionend", onEnd);
+    elem.style.left = x + "px";
+    elem.style.top = y + "px";
+    });
+}
+// pick up the top block from stack src
+function pickup(src) {
+    if (!stacks[src].length) return Promise.resolve();
+    heldBlock = stacks[src].pop();
+    const blk = heldBlock;
+    blk.style.zIndex = 1000;
+    const curX = parseFloat(blk.style.left);
+    return moveTo(blk, curX, cfg.liftY, "top");
+}
+// drop the held block onto stack dest
+function drop(dest) {
+    if (!heldBlock) return Promise.resolve();
+    const blk = heldBlock;
+    heldBlock = null;
+    const hIdx = stacks[dest].length;
+    stacks[dest].push(blk);
+    const tx = cfg.stackX[dest] - cfg.blockSize / 2;
+    const ty =
+    cfg.height -
+    cfg.baseHeight -
+    cfg.blockSize * (hIdx + 1) -
+    cfg.gap * hIdx;
+    // slide horizontally, then drop vertically
+    return moveTo(blk, tx, cfg.liftY, "left").then(() => moveTo(blk, tx, ty, "top"));
+}
+// simple wait/delay
+function wait(sec) {
+    return new Promise(r => setTimeout(r, sec * 1000));
+}
+// animate adding a whole stack of blocks (fade in + slight drop)
+function addStack(idx, labels) {
+  const newBlocks = [];
+  const baseLen   = stacks[idx].length;
+  // create blocks off-screen / transparent
+  labels.forEach((label, i) => {
+    const b = document.createElement("div");
+    b.className         = "block";
+    b.innerText         = label;
+    b.style.background  = colors[label] || "#888";
+    b.style.transition  = "none";
+    b.style.opacity     = "0";
+    wrapper.appendChild(b);
+    stacks[idx].push(b);
+    newBlocks.push(b);
+  });
+  // position them slightly above their final spot
+  newBlocks.forEach((b, i) => {
+    const posIdx = baseLen + i;
+    const x      = cfg.stackX[idx] - cfg.blockSize/2;
+    const y =
+      cfg.height -
+      cfg.baseHeight -
+      cfg.blockSize * (posIdx+1) -
+      cfg.gap * posIdx;
+    b.style.left   = x + "px";
+    b.style.top    = (y - 30) + "px";
+    b.style.zIndex = posIdx + 1;
+  });
+  // force layout
+  newBlocks[0].getBoundingClientRect();
+  // enable transitions including opacity
+  newBlocks.forEach(b => {
+    b.style.transition =
+      "left 0.4s ease, top 0.4s ease, opacity 0.4s ease";
+  });
+  // animate in with a small stagger
+  newBlocks.forEach((b, i) => {
+    setTimeout(() => {
+      b.style.opacity = "1";
+      const posIdx = baseLen + i;
+      const x      = cfg.stackX[idx] - cfg.blockSize/2;
+      const y =
+        cfg.height -
+        cfg.baseHeight -
+        cfg.blockSize * (posIdx+1) -
+        cfg.gap * posIdx;
+      b.style.top = y + "px";
+    }, i * 100);
+  });
+  // wait for last block’s animation to finish
+  const totalMs = (newBlocks.length - 1) * 100 + 500;
+  return wait(totalMs/1000);
+}
+// animate removing a whole stack (fade out + slight lift)
+// resolves to an array of labels bottom→top
+function removeStack(idx) {
+  const removed = stacks[idx].splice(0, stacks[idx].length);
+  removed.forEach(b => {
+    b.style.transition = "top 0.5s ease, opacity 0.5s ease";
+    b.style.opacity    = "0";
+    b.style.top        = (parseFloat(b.style.top) - 30) + "px";
+  });
+  return wait(0.5).then(() => {
+    removed.forEach(b => wrapper.removeChild(b));
+    return removed.map(b => b.innerText);
+  });
+}
+// move entire stack from src to dest (reversed order)
+function moveStack(src, dest) {
+  return removeStack(src).then(labels =>
+    addStack(dest, labels.reverse())
+  );
+}// remove top n blocks from stack idx with fade-out + lift.
+// Returns a Promise resolving to an array of labels (bottom→top).
+function removeBlocks(idx, n) {
+  n = Math.min(n, stacks[idx].length);
+  const removed = stacks[idx].splice(-n, n);
+  removed.forEach(b => {
+    b.style.transition = "top 0.5s ease, opacity 0.5s ease";
+    b.style.opacity    = "0";
+    b.style.top        = parseFloat(b.style.top) - 30 + "px";
+  });
+  return wait(0.5).then(() => {
+    removed.forEach(b => wrapper.removeChild(b));
+    return removed.map(b => b.innerText);
+  });
+}
+// add an array of labels (bottom→top) to stack idx with fade-in + drop.
+// Returns a Promise that resolves when the animation is complete.
+function addBlocks(idx, labels) {
+  const newBlocks = [];
+  const baseLen   = stacks[idx].length;
+  labels.forEach((label, i) => {
+    const b = document.createElement("div");
+    b.className        = "block";
+    b.innerText        = label;
+    b.style.background = colors[label] || "#888";
+    b.style.transition = "none";
+    b.style.opacity    = "0";
+    wrapper.appendChild(b);
+    stacks[idx].push(b);
+    newBlocks.push(b);
+  });
+  // position them slightly above their final spots
+  newBlocks.forEach((b, i) => {
+    const posIdx = baseLen + i;
+    const x      = cfg.stackX[idx] - cfg.blockSize/2;
+    const y      =
+      cfg.height -
+      cfg.baseHeight -
+      cfg.blockSize * (posIdx + 1) -
+      cfg.gap * posIdx;
+    b.style.left   = x + "px";
+    b.style.top    = (y - 30) + "px";
+    b.style.zIndex = posIdx + 1;
+  });
+  // force a reflow so the browser picks up the 'none' state
+  newBlocks[0].getBoundingClientRect();
+  // enable transitions, including opacity
+  newBlocks.forEach(b => {
+    b.style.transition =
+      "left 0.5s ease, top 0.5s ease, opacity 0.5s ease";
+  });
+  // animate in with a small stagger
+  newBlocks.forEach((b, i) => {
+    setTimeout(() => {
+      b.style.opacity = "1";
+      const posIdx    = baseLen + i;
+      const x         = cfg.stackX[idx] - cfg.blockSize/2;
+      const y         =
+        cfg.height -
+        cfg.baseHeight -
+        cfg.blockSize * (posIdx + 1) -
+        cfg.gap * posIdx;
+      b.style.top = y + "px";
+    }, i * 100);
+  });
+  const totalMs = (newBlocks.length - 1) * 100 + 500;
+  return wait(totalMs / 1000);
+}
+// move top n blocks from src to dest (order reversed as if moved
+// one by one). Returns a Promise.
+function moveBlocks(src, dest, n) {
+  return removeBlocks(src, n)
+    .then(labels => addBlocks(dest, labels.reverse()));
+}
+// runner for generator-based animation
+function run(genFn) {
+    const gen = typeof genFn === "function" ? genFn() : genFn;
+    function step(res) {
+    const { value, done } = gen.next(res);
+    if (done) return;
+    Promise.resolve(value).then(step);
+    }
+    step();
+}
+// initialize blocks
+initial.forEach((labels, si) => {
+    labels.forEach(label => createBlock(label, si));
+});
+// position instantly (no transitions), then enable transitions & run
+stacks.flat().forEach(b => (b.style.transition = "none"));
+positionAll();
+requestAnimationFrame(() => {
+    stacks.flat().forEach(b => {
+    b.style.transition = "left 0.5s ease, top 0.5s ease";
+    });
+    // start your animation here:
+    run(myAnimation);
+});
+// example animation
+function* myAnimation() {
+    while (true) {
+        yield addStack(0, ["A", "B", "C"]);
+        yield addStack(1, ["D", "E", "F"]);
+        yield pickup(0);
+        yield drop(1);
+        yield pickup(0);
+        yield drop(1);
+        yield pickup(0);
+        yield drop(2);
+        yield pickup(1);
+        yield drop(2);
+        yield pickup(1);
+        yield drop(2);
+        for (let i = 0; i <= 3; i++) {
+            yield pickup(1);
+            yield drop(0);
+            yield pickup(2);
+            yield drop(0);
+        }
+        yield wait(1);
+        yield removeStack(0);
+    }
+}
+})();
+</script>
